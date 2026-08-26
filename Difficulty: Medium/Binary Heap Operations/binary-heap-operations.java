@@ -1,71 +1,72 @@
 class MinHeap {
-    int[] arr;
+    int[] harr;
     int cap;
     int size;
 
     MinHeap(int cap) {
-        size = 0;
+        this.size = 0;
         this.cap = cap;
-        arr = new int[cap];
+        this.harr = new int[cap];
     }
-    
-    public int parent(int i){return (i-1)/2;}
-    public int left(int i){return 2*i + 1;}
-    public int right(int i){return 2*i + 2;}
 
-  
-    int extractMin() {
-        if(size == 0)
-            return -1;
-        int val = arr[0];
-        arr[0] = arr[size-1];
-        size--;
-        MinHeapify(0);
-        return val;
-    }
+    int parent(int i) { return (i - 1) / 2; }
+
+    int left(int i) { return (2 * i + 1); }
+
+    int right(int i) { return (2 * i + 2); }
 
     void insertKey(int k) {
         if(size == cap)
             return;
-        arr[size] = k;
+        harr[size] = k;
         int i = size;
         size++;
-        while(parent(i) >= 0 && arr[parent(i)] > arr[i]){
-            swap(arr, parent(i), i);
+        while(i > 0 && harr[parent(i)] > harr[i]){
+            swap(harr, parent(i), i);
             i = parent(i);
         }
     }
-
+    
+    
+    int extractMin() {
+        if(size == 0)
+            return -1;
+        int val = harr[0];
+        harr[0] = harr[size - 1];
+        size--;
+        MinHeapify(0);
+        return val;
+    }
+    
+        
     void deleteKey(int i) {
         if(i >= size)
             return;
-        arr[i] = Integer.MIN_VALUE;
-        while(parent(i) >= 0 && arr[parent(i)] > arr[i]){
-            swap(arr, parent(i), i);
+        harr[i] = Integer.MIN_VALUE;
+        while(i > 0 && harr[parent(i)] > harr[i]){
+            swap(harr, parent(i), i);
             i = parent(i);
         }
         extractMin();
     }
 
-    void decreaseKey(int i, int new_val) {
-     
-    }
+
 
     void MinHeapify(int i) {
-        int left = left(i);
-        int right = right(i);
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
         int smallest = i;
-        if(left <= size && arr[left] < arr[smallest]) smallest = left;
-        if(right <= size && arr[right] < arr[smallest]) smallest = right;
+        if(left < size && harr[left] < harr[smallest]) smallest = left;
+        if(right < size && harr[right] < harr[smallest]) smallest = right;
         if(smallest != i){
-            swap(arr, i, smallest);
+            swap(harr, smallest, i);
             MinHeapify(smallest);
         }
     }
     
-    public void swap(int nums[], int i, int j){
-        int tmp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = tmp;
+    public void swap(int[] arr, int i, int j){
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
     }
 }
