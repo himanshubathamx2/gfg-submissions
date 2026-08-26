@@ -1,35 +1,32 @@
 class Triplet{
     int val;
-    int array;
     int index;
-    Triplet(int val, int array, int index){
+    int arrayIndex;
+    Triplet(int val, int index , int arrayIndex){
         this.val = val;
-        this.array = array;
         this.index = index;
+        this.arrayIndex = arrayIndex;
     }
 }
 
 class Solution {
     public ArrayList<Integer> mergeArrays(int[][] mat) {
-        int n = mat.length;
-        PriorityQueue<Triplet> pq = new PriorityQueue<>((a, b) -> a.val - b.val);
-        for(int i=0; i<n; i++){
-            pq.offer(new Triplet(mat[i][0], i, 0));
+        ArrayList<Integer> list = new ArrayList<>();
+        PriorityQueue<Triplet> q = new PriorityQueue<>((a, b)-> a.val-b.val);
+        for(int i=0; i <mat.length; i++){
+            q.offer(new Triplet(mat[i][0], 0, i));
         }
         
-        ArrayList<Integer> ans = new ArrayList<>();
-        
-        while(!pq.isEmpty()){
-            Triplet popped = pq.poll();
+        while(!q.isEmpty()){
+            Triplet popped = q.poll();
             int val = popped.val;
-            int array = popped.array;
             int index = popped.index;
-            
-            ans.add(val);
-            
-            if(index + 1 < mat[array].length)
-                pq.offer(new Triplet(mat[array][index + 1], array, index + 1));
+            int arrayIndex = popped.arrayIndex;
+            list.add(val);
+            if(index + 1 < mat[arrayIndex].length){
+                q.offer(new Triplet(mat[arrayIndex][index + 1], index + 1, arrayIndex));
+            }
         }
-        return ans;
+        return list;
     }
 }
