@@ -6,9 +6,11 @@ class Solution {
         }
         
         for(int i=1; i<k; i++){
-            arr[0] = arr[n-1];
-            n--;
-            minH(arr, 0, n);
+            // arr[0] = arr[n-1];
+            // n--;
+            // minH(arr, 0, n);
+            arr[0] = Integer.MAX_VALUE;
+            minH(arr, 0, n-1);
         }
         return arr[0];
     }
