@@ -19,15 +19,15 @@ class Solution {
         pq.offer(new Triplet(a[0] + b[0], 0, 0));
         set.add(0+","+0);        
         ArrayList<Integer> ans = new ArrayList<>();
-        int c = 0;
         while(!pq.isEmpty()){
-            Triplet popped =  pq.poll();
+            Triplet popped = pq.poll();
             int val = popped.val;
             int i = popped.i;
             int j = popped.j;
-            c++;
+            // if(set.contains(i+","+j))
+            //     continue;
             ans.add(val);
-            if(c == k)
+            if(ans.size() == k)
                 return ans;
             if(i+1 < n && !set.contains((i+1)+","+j)){
                 pq.offer(new Triplet(a[i+1] + b[j], i+1, j));
