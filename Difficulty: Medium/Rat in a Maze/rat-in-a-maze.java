@@ -18,6 +18,7 @@ class Solution {
             return;
         }
         String dxn = "DLRU";
+        
         vis[row][col] = 1;
         for(int i=0; i<4; i++){
             int nrow = row + drow[i];
